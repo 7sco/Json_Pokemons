@@ -10,7 +10,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary"/>
+        />
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="match_parent"

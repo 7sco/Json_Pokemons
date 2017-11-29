@@ -1,5 +1,6 @@
 package com.example.franciscoandrade.pokemon;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.franciscoandrade.pokemon.models.Pokemon;
 
 import java.util.ArrayList;
@@ -18,9 +20,12 @@ import java.util.ArrayList;
 public class ListPokemonAdapter extends RecyclerView.Adapter<ListPokemonAdapter.ViewHolder>{
 
     private ArrayList<Pokemon> dataset;
+    private Context context;
 
-    public ListPokemonAdapter() {
+
+    public ListPokemonAdapter(Context context) {
         dataset = new ArrayList<>();
+        this.context=context;
     }
 
     @Override
@@ -35,6 +40,10 @@ public class ListPokemonAdapter extends RecyclerView.Adapter<ListPokemonAdapter.
 
         Pokemon p= dataset.get(position);
         holder.nameTextView.setText(p.getName());
+        String url= "https://pokeapi.co/media/sprites/pokemon/";
+
+        Glide.with(context)
+                .load(url+ p.getNumber() +".png").into(holder.pictureImageView);
     }
 
     @Override
