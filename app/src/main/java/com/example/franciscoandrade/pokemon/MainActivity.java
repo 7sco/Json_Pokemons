@@ -2,6 +2,8 @@ package com.example.franciscoandrade.pokemon;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.franciscoandrade.pokemon.models.Pokemon;
@@ -25,10 +27,24 @@ public class MainActivity extends AppCompatActivity {
     //TAG
     private static final String TAG = "POKEDEX";
 
+    //RecyclerView
+    private RecyclerView recyclerView;
+    private ListPokemonAdapter listPokemonAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        listPokemonAdapter= new ListPokemonAdapter();
+        recyclerView.setAdapter(listPokemonAdapter);
+
+        GridLayoutManager layoutManager= new GridLayoutManager(this, 3);
+        recyclerView.setLayoutManager(layoutManager);
+
+
 
 
         //bring retrofit builder into retrofit with base url and gson reformat  and at the end build it
@@ -38,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Create method to get data
         getData();
-
 
     }
 
@@ -61,11 +76,15 @@ public class MainActivity extends AppCompatActivity {
                     PokemonResponse pokemonResponse= response.body();
                     ArrayList<Pokemon> pokemonList= pokemonResponse.getResults();
 
-                    for (int i=0; i <pokemonList.size(); i++){
-                        Pokemon p =pokemonList.get(i);
-                        Log.e(TAG, "Pokemon: "+p.getName() );
 
-                    }
+                    listPokemonAdapter.addListPokemon(pokemonList);
+
+
+//                    for (int i=0; i <pokemonList.size(); i++){
+//                        Pokemon p =pokemonList.get(i);
+//                        Log.e(TAG, "Pokemon: "+p.getName() );
+//
+//                    }
                 }
 
                 else{
